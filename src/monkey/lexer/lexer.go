@@ -10,6 +10,20 @@ func (l *Lexer) NextToken() token.Token {
 	switch l.ch {
 	case '=':
 		tok = newToken(token.ASSIGN, l.ch)
+	case '+':
+		tok = newToken(token.PLUS, l.ch)
+	case '-':
+		tok = newToken(token.MINUS, l.ch)
+	case '!':
+		tok = newToken(token.BANG, l.ch)
+	case '/':
+		tok = newToken(token.SLASH, l.ch)
+	case '*':
+		tok = newToken(token.ASTERISK, l.ch)
+	case '<':
+		tok = newToken(token.LT, l.ch)
+	case '>':
+		tok = newToken(token.GT, l.ch)
 	case ';':
 		tok = newToken(token.SEMICOLON, l.ch)
 	case '(':
@@ -18,8 +32,6 @@ func (l *Lexer) NextToken() token.Token {
 		tok = newToken(token.RPAREN, l.ch)
 	case ',':
 		tok = newToken(token.COMMA, l.ch)
-	case '+':
-		tok = newToken(token.PLUS, l.ch)
 	case '{':
 		tok = newToken(token.LBRACE, l.ch)
 	case '}':
@@ -44,6 +56,13 @@ func (l *Lexer) NextToken() token.Token {
 	return tok
 }
 
+type Lexer struct {
+	input        string
+	position     int  // current position in input(points to current char)
+	readPosition int  // current reading position in input(after current char)
+	ch           byte // current char under examination
+}
+
 func (l *Lexer) skipWhitespace() {
 	for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
 		l.readChar()
@@ -52,13 +71,6 @@ func (l *Lexer) skipWhitespace() {
 
 func newToken(tokenType token.TokenType, ch byte) token.Token {
 	return token.Token{Type: tokenType, Literal: string(ch)}
-}
-
-type Lexer struct {
-	input        string
-	position     int  // current position in input(points to current char)
-	readPosition int  // current reading position in input(after current char)
-	ch           byte // current char under examination
 }
 
 func New(input string) *Lexer {
