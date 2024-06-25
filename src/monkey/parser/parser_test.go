@@ -26,7 +26,7 @@ func TestLetStatments(t *testing.T) {
 	}
 
 	tests := []struct {
-		eexpectedIdentifier string
+		expectedIdentifier string
 	}{
 		{"x"},
 		{"y"},
@@ -35,7 +35,7 @@ func TestLetStatments(t *testing.T) {
 
 	for i, tt := range tests {
 		stmt := program.Statements[i]
-		if !testLetStatment(t, stmt, tt.eexpectedIdentifier) {
+		if !testLetStatment(t, stmt, tt.expectedIdentifier) {
 			return
 		}
 	}
